@@ -5,13 +5,11 @@ import rootReducer from './reducers'
 
 const loggerMiddleware = createLogger()
 
-export default function configureStore(preloadedState) {
-  return createStore(
-    rootReducer,
-    preloadedState,
-    applyMiddleware(
-      thunkMiddleware,
-      loggerMiddleware
-    )
+import { composeWithDevTools } from 'redux-devtools-extension';
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+export default function configureStore() {
+  return createStore(rootReducer, 
+    composeWithDevTools(applyMiddleware(thunkMiddleware, loggerMiddleware))
   )
 }
